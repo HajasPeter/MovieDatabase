@@ -1,21 +1,28 @@
 package ui;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 import pojo.Actor;
+import repository.HibernateUtil;
 
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
 
-        Actor peterHajas = new Actor("Peter", "Hajas", "slovak", LocalDate.of(1992, 8, 23));
-        Actor matejHajas = new Actor();
-        matejHajas.setFirstName("Matej");
-        matejHajas.setLastName("Hajas");
-        matejHajas.setNationality("slovak");
-        matejHajas.setDateOfBirth(LocalDate.of(1987,10,2));
-        System.out.println(peterHajas);
-        System.out.println();
-        System.out.println(matejHajas);
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        Actor bradPitt = new Actor();
+        bradPitt.setFirstName("Brad");
+        bradPitt.setLastName("Pitt");
+        bradPitt.setNationality("american");
+        bradPitt.setDateOfBirth(LocalDate.of(1963,12,18));
+
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(bradPitt);
+        transaction.commit();
 
     }
 }
